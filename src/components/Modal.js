@@ -1,4 +1,5 @@
 import { motion, AnimatePresence } from 'framer-motion';
+import { useEffect } from 'react';
 
 const backdropVariants = {
 	visible: { opacity: 1 },
@@ -8,14 +9,10 @@ const modalVarinats = {
 	visible: { y: 0, opacity: 1, transition: { delay: 0.5, type: 'spring', stiffness: 120 } },
 	hidden: { y: '-100vh', opacity: 0 }
 };
-export const Modal = ({ showModal, setShowModal }) => {
-	const closeModal = () => {
-		setShowModal(false);
-		console.log('test');
-	};
 
+export const Modal = ({ showModal, closeModal }) => {
 	return (
-		<AnimatePresence exitBeforeEnter>
+		<AnimatePresence>
 			{showModal && (
 				<motion.div
 					animate="visible"
@@ -28,14 +25,18 @@ export const Modal = ({ showModal, setShowModal }) => {
 						animate="visible"
 						initial="hidden"
 						variants={modalVarinats}
-						className="
-                        relative bg-white  h-64 w-64 p-16 rounded-lg shadow-xl opacity-100 z-20"
+						className=" flex flex-col justify-center items-center
+                        relative bg-white  h-64  p-16 rounded-lg shadow-xl opacity-100 z-20 "
 					>
-						<motion.button
-							className=" text-2xl bg-red-500 h-8 w-8 fixed top-0 right-0 mr-2 outline-none"
-							onClick={() => closeModal()}
-						/>
 						<span>Modal Content</span>
+						<button
+							className="bg-purple-500 h-16 w-56  rounded-xl outline-none"
+							onClick={() => {
+								closeModal();
+							}}
+						>
+							Close
+						</button>
 					</motion.div>
 				</motion.div>
 			)}
